@@ -22,7 +22,7 @@ grad = zeros(size(theta));
 h_of_X = sigmoid(X*theta);
 cost_expr = -y' * log (h_of_X) - (1 - y)' * log(1 - h_of_X);
 J = (1/m) * sum(cost_expr);  
-grad=(1/m) * (h_of_X - y)'*X;
+grad=(1/m) * ((h_of_X - y)'*X)';
 
 % =============================================================
 
