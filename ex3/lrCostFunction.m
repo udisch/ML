@@ -37,14 +37,14 @@ grad = zeros(size(theta));
 %
 
 h_of_X = sigmoid(X * theta);
-cost_unregulized = (1/m) * sum(-y' * log (h_of_X) - (1 - y)' * log(1 - h_of_X));
-grad_unregulized = (1/m) * X' * (h_of_X - y);
+cost_unregularized = (1/m) * sum(-y' * log (h_of_X) - (1 - y)' * log(1 - h_of_X));
+grad_unregularized = (1/m) * X' * (h_of_X - y);
 
 % regularize
 temp = theta;
 temp(1) = 0;
-J += cost_unregulized + (lambda/(2*m))*sum(temp.^2);
-grad += grad_unregulized + (lambda/m)*temp;
+J += cost_unregularized + (lambda/(2*m))*sum(temp.^2);
+grad += grad_unregularized + (lambda/m)*temp;
 
 
 % =============================================================
