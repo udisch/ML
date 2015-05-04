@@ -80,7 +80,7 @@ h_theta_x = a3;
 cost = 0;
 for i = 1:m
 	% build y(i) vector with 1 in corresponding index for the digit
-	% for example if original y(i) = 2, then y_i = [0 1 0 ...]''
+	% for example if original y(i) = 2, then y_i = [0 1 0 ...]'
 	y_i = zeros(num_labels, 1);
 	y_i(y(i)) = 1;	
 	for k = 1:num_labels
@@ -90,7 +90,8 @@ end
 
 J = (1 / m) * cost;
 
-
+% add regularization
+J += ((lambda / (2 * m)) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))));
 
 
 
