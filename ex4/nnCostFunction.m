@@ -62,19 +62,33 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% feed forward, calculate h_theta(x)
+a1 = [ones(m, 1) X];
 
+% hidden layer
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
 
+% output layer
+a2 = [ones(m,1) a2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
 
+h_theta_x = a3;
 
+% calculate cost. non-vectorized version
+cost = 0;
+for i = 1:m
+	% build y(i) vector with 1 in corresponding index for the digit
+	% for example if original y(i) = 2, then y_i = [0 1 0 ...]''
+	y_i = zeros(num_labels, 1);
+	y_i(y(i)) = 1;	
+	for k = 1:num_labels
+		cost += (-y_i(k) * log(h_theta_x(i,k))) - ((1 - y_i(k)) * log(1 - h_theta_x(i,k)));
+	end
+end
 
-
-
-
-
-
-
-
-
+J = (1 / m) * cost;
 
 
 
