@@ -62,7 +62,8 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-% feed forward, calculate h_theta(x)
+
+% compute cost. feed forward, calculate h_theta(x)
 a1 = [ones(m, 1) X];
 
 % hidden layer
@@ -93,7 +94,32 @@ J = (1 / m) * cost;
 % add regularization
 J += ((lambda / (2 * m)) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))));
 
+% back propagation
+for t = 1:m
+	% feedforward for single example x(t), working with column vectors
+	a_1 = X(t, :)';
+	a_1 = [1; a_1];
+	
+	z_2 = Theta1 * a_1;
+	a_2 = sigmoid(z_2);
+	a_2 = [1; a_2];
 
+	z_3 = Theta2 * a_2;
+	a_3 = sigmoid(z_3);
+
+	y_k = zeros(size(a_3));
+	y_k(y(t)) = 1;
+	delta_3 = a_3 -  y_k;
+
+	delta_2 = Theta2' * delta_3 .* [1; sigmoidGradient(z_2)];
+
+	% accumulate gradients		
+	Theta1_grad += delta_2(2:end) * a_1';
+	Theta2_grad += delta_3 * a_2';	
+end
+
+Theta1_grad *= 1/m;
+Theta2_grad *= 1/m;
 
 % -------------------------------------------------------------
 
