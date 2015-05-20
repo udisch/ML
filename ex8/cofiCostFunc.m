@@ -60,9 +60,15 @@ for k=1:size(Theta_grad,1)
 	Theta_grad(k,:) = ((X_temp * Theta(k,:)' - Y_temp))' * X_temp; 
 end
 
+% cost regularization
+sum_theta = 0.5 * lambda * sum(sum(Theta.^2));
+sum_X = 0.5 * lambda * sum(sum(X.^2));
 
+J = J + sum_theta + sum_X;
 
-
+% gradient regularization
+X_grad = X_grad + (lambda * X);
+Theta_grad = Theta_grad + (lambda * Theta);
 
 % =============================================================
 
