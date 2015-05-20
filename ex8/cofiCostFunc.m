@@ -44,9 +44,21 @@ XTheta = X * Theta';
 
 J = 0.5 * sum((XTheta(R == 1) - Y(R == 1)).^2);
 
+% X grad - movies
+for k=1:size(X_grad,1)
+	idx = find(R(k,:) == 1);
+	Theta_temp = Theta(idx,:);
+	Y_temp = Y(k,idx);
+	X_grad(k,:) = (X(k,:) * Theta_temp' - Y_temp) * Theta_temp; 
+end
 
-
-
+% Theta grad - users
+for k=1:size(Theta_grad,1)
+	idx = find(R(:,k) == 1);	
+	X_temp = X(idx, :);
+	Y_temp = Y(idx,k);
+	Theta_grad(k,:) = ((X_temp * Theta(k,:)' - Y_temp))' * X_temp; 
+end
 
 
 
